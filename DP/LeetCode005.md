@@ -153,7 +153,7 @@ public:
 
 **官方解答：**
 
-![](..\Images\DP01.png)
+![](../Images/DP01.png)
 
 ### 官方代码：
 
