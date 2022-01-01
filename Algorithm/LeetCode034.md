@@ -115,6 +115,125 @@ public:
 };
 ```
 
+```python
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        left = 0
+        right = len(nums)
+        while (left < right):
+            mid = (left + right) // 2
+            if nums[mid] < target:
+                left = mid + 1
+            elif nums[mid] > target:
+                right = mid
+            else:
+                # 这里变成了暴力破解法
+                head = mid
+                while head - 1 >= 0 and nums[head - 1] == target:
+                    head -= 1
+                tail = mid
+                while tail + 1 < len(nums) and nums[tail + 1] == target:
+                    tail += 1
+                
+                return [head, tail]
+        # 查找失败
+        return [-1, -1]
+```
+
+```python
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        left = 0
+        right = len(nums)
+        while (left < right):
+            mid = (left + right) // 2
+            if nums[mid] < target:
+                left = mid + 1
+            elif nums[mid] > target:
+                right = mid
+            else:
+                # 使用不同的函数
+                head = self.searchHead(nums, target)
+                tail = self.searchTail(nums, target)               
+                return [head, tail]
+
+        # 查找失败
+        return [-1, -1]       
+    
+    def searchHead(self, nums: List[int], target: int) -> int:
+        left = 0
+        right = len(nums)
+        head = -1
+        while (left < right):
+            mid = (left + right) // 2
+            if nums[mid] < target:
+                left = mid + 1
+            elif nums[mid] > target:
+                right = mid
+            else:
+                head = mid
+                right = mid
+
+        return  head     
+
+    def searchTail(self, nums: List[int], target: int) -> int:
+        left = 0
+        right = len(nums)
+        Tail = -1
+        while (left < right):
+            mid = (left + right) // 2
+            if nums[mid] < target:
+                left = mid + 1
+            elif nums[mid] > target:
+                right = mid
+            else:
+                Tail = mid
+                left = mid + 1
+
+        return  Tail
+```
+
+```c++
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int left = 0;
+        int right = nums.size();
+        vector<int> ret = {-1, -1};
+        while (left < right) {
+            int mid = left + ((right - left) >> 1);
+            if (nums[mid] == target) {
+                ret[0] = binarySearch(nums, target, true);
+                ret[1] = binarySearch(nums, target, false) - 1;
+                return ret;
+            } else if (nums[mid] > target) {
+                right = mid;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            }
+        }
+        // 查找失败
+        return ret;
+    }
+    
+    int binarySearch(vector<int>& nums, int target, bool flag) {
+        int left = 0, right = nums.size();
+        int res = nums.size();
+        while (left < right) {
+            int mid = left + ((right - left) >> 1);
+            // 判断关键
+            if (nums[mid] > target || (flag && nums[mid] >= target)) {
+                right = mid;
+                res = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return res;
+    }
+};
+```
+
 ### 知识点：
 
 官方代码依旧简洁.jpg。但起码自己还是独立完成了这道题。下次接着加油。

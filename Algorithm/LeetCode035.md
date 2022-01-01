@@ -57,6 +57,47 @@ public:
 };
 ```
 
+```c++
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int left = 0;
+        int right = nums.size();
+        while (left < right){
+            int middle = left + ((right - left) >> 1);
+            if (nums[middle] == target) {
+                return middle;
+            }
+            else if (nums[middle] < target) {
+                left = middle + 1;
+            }
+            else if (nums[middle] > target) {
+                right = middle;
+            }
+        }
+        // 查找失败
+        return right;
+    }
+};
+```
+
+```python
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        left = 0
+        right = len(nums)
+        while (left < right):
+            middle = (left + right) // 2
+            if nums[middle] == target:
+                return middle
+            elif nums[middle] < target:
+                left = middle + 1
+            elif nums[middle] > target:
+                right = middle
+        # 查找失败
+        return right
+```
+
 ### 知识点：
 
 最后的返回值其实我是看返回的head和toil值选出来的。[doge]
